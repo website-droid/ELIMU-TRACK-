@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Elimu Track - CBC School Registration | Kenya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0a2e0a 0%, #1a4d1a 50%, #0d3b0d 100%);
+            min-height: 100vh;
+            padding: 20px 16px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: white;
+        }
+
+        .header h1 i {
+            background: #ffcd3c;
+            padding: 12px;
+            border-radius: 50%;
+            color: #1e4d1e;
+            margin-right: 10px;
+        }
+
+        .header h1 span {
+            color: #ffcd3c;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .badge {
+            background: #ff8c00;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-wa {
+            background: #25D366;
+        }
+
+        .badge-email {
+            background: #2b5e2b;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #2b5e2b, #1f4f1f);
+            padding: 20px 24px;
+            color: white;
+            text-align: center;
+        }
+
+        .form-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .form-header p {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .progress-steps {
+            display: flex;
+            background: #e8f5e9;
+            padding: 12px 20px;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #d0e8c0;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 8px 5px;
+            background: #f5f5f5;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #6b8c5c;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .step.active {
+            background: #2b5e2b;
+            color: white;
+        }
+
+        .step.completed {
+            background: #ffcd3c;
+            color: #1e4d1e;
+        }
+
+        form {
+            padding: 24px;
+        }
+
+        .form-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .form-section.active-section {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #2b5e2b;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffcd3c;
+            padding-left: 15px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+            color: #2c4e2c;
+            font-size: 14px;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #ffcd3c;
+            width: 20px;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e8dc;
+            border-radius: 16px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #2b5e2b;
+            box-shadow: 0 0 0 3px rgba(43,94,43,0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            font-size: 13px;
+            background: #f0f7f0;
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label:hover {
+            background: #e0e8dc;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            font-size: 13px;
+            background: #f0f7f0;
+            padding: 10px 18px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        .radio-group label:hover {
+            background: #e0e8dc;
+        }
+
+        .streams-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .stream-badge {
+            background: #f0f7f0;
+            padding: 8px 16px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .stream-badge input {
+            width: 90px;
+            padding: 8px;
+            text-align: center;
+            border-radius: 20px;
+            border: 1px solid #c8dcc0;
+        }
+
+        /* WhatsApp Logo Upload Button */
+        .whatsapp-logo-area {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .whatsapp-logo-area:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37,211,102,0.3);
+        }
+
+        .whatsapp-logo-area i {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .whatsapp-logo-area p {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .info-note {
+            background: #e8f5e9;
+            border-left: 4px solid #ff8c00;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            border-radius: 12px;
+        }
+
+        .instruction-box {
+            background: #e8f5e9;
+            border-left: 4px solid #25D366;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            font-size: 13px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: #2b5e2b;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1f451f;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e0e8dc;
+            color: #2b5e2b;
+        }
+
+        .btn-secondary:hover {
+            background: #c8dcc0;
+        }
+
+        .btn-success {
+            background: #25D366;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-success:hover {
+            background: #1da15a;
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 32px;
+            max-width: 450px;
+            text-align: center;
+            animation: modalPop 0.4s ease;
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-content i {
+            font-size: 60px;
+            color: #2b5e2b;
+        }
+
+        .modal-content .app-code {
+            background: #2b5e2b;
+            color: white;
+            padding: 12px;
+            border-radius: 16px;
+            font-size: 22px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .whatsapp-link {
+            background: #25D366;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #c8e0c0;
+            font-size: 11px;
+        }
+
+        @media (max-width: 600px) {
+            .btn {
+                padding: 12px 16px;
+                font-size: 13px;
+            }
+            .step {
+                font-size: 9px;
+                padding: 6px 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1><i class="fas fa-graduation-cap"></i> ELIMU <span>TRACK PRO</span></h1>
+        <div class="badge-container">
+            <div class="badge"><i class="fas fa-leaf"></i> CBC Kenya | PP1 - Grade 12</div>
+            <div class="badge badge-wa"><i class="fab fa-whatsapp"></i> Logo → WhatsApp</div>
+            <div class="badge badge-email"><i class="fas fa-envelope"></i> Details → Email</div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <div class="form-header">
+            <h2><i class="fas fa-paper-plane"></i> Apply for Your CBC Exam System</h2>
+            <p>📸 School Logo + Name goes to WhatsApp • 📧 Full details go to Email</p>
+        </div>
+
+        <div class="progress-steps">
+            <div class="step active" data-step="1">1. School Info</div>
+            <div class="step" data-step="2">2. Academics</div>
+            <div class="step" data-step="3">3. Learning Areas</div>
+            <div class="step" data-step="4">4. Submit</div>
+        </div>
+
+        <form id="applicationForm">
+            <!-- SECTION 1 -->
+            <div class="form-section active-section" id="section1">
+                <div class="section-title"><i class="fas fa-building"></i> School Information</div>
+                
+                <div class="info-note">
+                    <i class="fas fa-info-circle"></i> Please fill in your school's details accurately.
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fas fa-school"></i> School Name <span class="required">*</span></label>
+                        <input type="text" id="schoolName" placeholder="Enter your school name" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> School Location <span class="required">*</span></label>
+                        <input type="text" id="schoolLocation" placeholder="e.g., Nairobi, Kenya" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> School Phone</label>
+                        <input type="tel" id="schoolPhone" placeholder="0712345678">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> School Email</label>
+                        <input type="email" id="schoolEmail" placeholder="school@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-hashtag"></i> KNEC Registration Code</label>
+                        <input type="text" id="knecCode" placeholder="e.g., PP/B/2023/4567">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i> School Category <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="schoolCategory" value="Primary School"> Primary School (PP1 - Grade 6)</label>
+                            <label><input type="radio" name="schoolCategory" value="Junior School"> Junior School (Grade 7 - Grade 9)</label>
+                            <label><input type="radio" name="schoolCategory" value="Senior School"> Senior School (Grade 10 - Grade 12)</label>
+                            <label><input type="radio" name="schoolCategory" value="Primary & Junior School"> Primary & Junior School</label>
+                            <label><input type="radio" name="schoolCategory" value="Primary, Junior & Senior School"> Primary, Junior & Senior School</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="nextSection(2)">Next: Academics <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="form-section" id="section2">
+                <div class="section-title"><i class="fas fa-layer-group"></i> Academic Configuration</div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-alt"></i> Academic Year</label>
+                        <input type="text" id="academicYear" placeholder="e.g., 2024" value="2024">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-week"></i> Number of Terms</label>
+                        <select id="numTerms">
+                            <option value="3">3 Terms (Standard)</option>
+                            <option value="2">2 Terms</option>
+                            <option value="4">4 Terms</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> Grades Offered <span class="required">*</span></label>
+                    <div class="checkbox-group" id="gradesCheckbox"></div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-code-branch"></i> Maximum Streams Per Grade</label>
+                    <select id="maxStreams">
+                        <option value="1">1 Stream</option>
+                        <option value="2">2 Streams</option>
+                        <option value="3">3 Streams</option>
+                        <option value="4">4 Streams</option>
+                        <option value="5" selected>5 Streams</option>
+                        <option value="6">6 Streams</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-tags"></i> Stream Names</label>
+                    <div id="streamNamesContainer" class="streams-container"></div>
+                    <small>e.g., Red, Blue, Green or North, South, East, West</small>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" onclick="prevSection(1)"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextSection(3)">Next: Learning Areas <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="form-section" id="section3">
+                <div class="section-title"><i class="fas fa-book"></i> CBC Learning Areas</div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-language"></i> Optional Learning Areas</label>
+                    <div class="checkbox-group" id="optionalLearningAreas">
+                        <label><input type="checkbox" value="French"> French</label>
+                        <label><input type="checkbox" value="German"> German</label>
+                        <label><input type="checkbox" value="Arabic"> Arabic</label>
+                        <label><input type="checkbox" value="Agriculture"> Agriculture</label>
+                        <label><input type="checkbox" value="Computer Studies"> Computer Studies</label>
+                        <label><input type="checkbox" value="Business Studies"> Business Studies</label>
+                        <label><input type="checkbox" value="Music"> Music</label>
+                        <label><input type="checkbox" value="Art & Design"> Art & Design</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-flag-checkered"></i> Passing Marks Threshold</label>
+                    <input type="number" id="passingMarks" value="50">
+                    <small>CBC standard is 50%</small>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" onclick="prevSection(2)"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextSection(4)">Next: Submit <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="form-section" id="section4">
+                <div class="section-title"><i class="fas fa-user-tie"></i> Your Contact & Submit</div>
+
+                <div class="instruction-box">
+                    <i class="fab fa-whatsapp" style="color:#25D366;"></i> <strong>HOW IT WORKS:</strong><br><br>
+                    1️⃣ Fill your contact details below<br>
+                    2️⃣ Click the GREEN button below to send your LOGO + SCHOOL NAME to WhatsApp<br>
+                    3️⃣ Then click SUBMIT to send all details to Email<br><br>
+                    📸 <strong>Logo + School Name will go to WhatsApp</strong> (so you know which school it is)<br>
+                    📧 <strong>All details will go to Email</strong> (for your records)
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Your Full Name <span class="required">*</span></label>
+                        <input type="text" id="contactName" placeholder="Your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Your Email <span class="required">*</span></label>
+                        <input type="email" id="contactEmail" placeholder="you@school.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fab fa-whatsapp"></i> Your WhatsApp Number</label>
+                        <input type="tel" id="contactPhone" placeholder="0712345678">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-user-tag"></i> Your Position</label>
+                        <input type="text" id="contactPosition" placeholder="e.g., Headteacher">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Create Password <span class="required">*</span></label>
+                        <input type="password" id="adminPassword" placeholder="Min 6 characters" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fab fa-whatsapp"></i> School Logo <span class="required">*</span></label>
+                    <div class="whatsapp-logo-area" onclick="sendLogoToWhatsApp()">
+                        <i class="fab fa-whatsapp"></i>
+                        <p><strong>📸 CLICK HERE TO SEND LOGO TO WHATSAPP</strong></p>
+                        <p style="font-size: 12px; opacity: 0.9;">Your logo + school name will be sent directly to our WhatsApp</p>
+                    </div>
+                    <input type="file" id="logoInput" accept="image/*" style="display:none;">
+                    <small style="color:#25D366;"><i class="fab fa-whatsapp"></i> Click the green button above to send your logo to WhatsApp</small>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-comment-dots"></i> Additional Notes</label>
+                    <textarea id="notes" rows="3" placeholder="Any special requirements?"></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" onclick="prevSection(3)"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button type="button" class="btn btn-success" onclick="submitToEmail()"><i class="fas fa-envelope"></i> SUBMIT DETAILS TO EMAIL</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <i class="fab fa-whatsapp"></i> Logo + School Name → WhatsApp • <i class="fas fa-envelope"></i> Full Details → Email
+    </footer>
+</div>
+
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <i class="fas fa-check-circle"></i>
+        <h3>Application Submitted!</h3>
+        <div class="app-code" id="appCodeDisplay">---</div>
+        <p><strong>✅ CHECK YOUR WHATSAPP!</strong></p>
+        <p>The school logo + name has been sent to your WhatsApp.</p>
+        <p style="background:#e8f5e9; padding:10px; border-radius:12px; margin:10px 0;">
+            <i class="fab fa-whatsapp" style="color:#25D366;"></i> <strong>To save the logo:</strong><br>
+            Tap the image → Download / Save to device
+        </p>
+        <p><strong>📧 Also check your email</strong> for the complete application details.</p>
+        <a href="https://wa.me/254717883986" class="whatsapp-link">
+            <i class="fab fa-whatsapp"></i> Open WhatsApp
+        </a>
+        <button class="btn" onclick="closeModal()" style="margin-top:15px; background:#2b5e2b;">Close</button>
+    </div>
+</div>
+
+<script>
+    // YOUR DETAILS
+    const YOUR_WHATSAPP = "254717883986";
+    const YOUR_EMAIL = "blezofxacademy@gmail.com";
+    
+    let logoFile = null;
+    let logoFileName = null;
+    let currentSection = 1;
+    
+    const cbcGrades = ["PP1", "PP2", "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"];
+    
+    function populateGrades() {
+        const container = document.getElementById("gradesCheckbox");
+        container.innerHTML = "";
+        cbcGrades.forEach(grade => {
+            const label = document.createElement("label");
+            label.innerHTML = `<input type="checkbox" value="${grade}"> ${grade}`;
+            container.appendChild(label);
+        });
+    }
+    
+    function updateStreamNames() {
+        const maxStreams = parseInt(document.getElementById("maxStreams").value);
+        const container = document.getElementById("streamNamesContainer");
+        const defaultNames = ["Red", "Blue", "Green", "Yellow", "Purple"];
+        container.innerHTML = "";
+        for (let i = 0; i < maxStreams; i++) {
+            const div = document.createElement("div");
+            div.className = "stream-badge";
+            div.innerHTML = `<span>Stream ${i+1}:</span> <input type="text" value="${defaultNames[i] || 'Stream'+(i+1)}" class="stream-name">`;
+            container.appendChild(div);
+        }
+    }
+    
+    // Logo upload for WhatsApp
+    document.getElementById('logoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 2 * 1024 * 1024) {
+                alert('File too large! Max 2MB.');
+                return;
+            }
+            logoFile = file;
+            logoFileName = file.name;
+        }
+    });
+    
+    // Send Logo + School Name to WhatsApp
+    function sendLogoToWhatsApp() {
+        const schoolName = document.getElementById("schoolName").value.trim();
+        
+        if (!schoolName) {
+            alert("Please enter School Name first!");
+            document.getElementById("schoolName").focus();
+            return;
+        }
+        
+        // Create file input to select image
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('File too large! Max 2MB.');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imageData = event.target.result;
+                    
+                    // Create WhatsApp message with school name and image
+                    const message = `🏫 *NEW SCHOOL APPLICATION* 🏫%0A%0A📌 *School Name:* ${schoolName}%0A📸 *Logo attached below*%0A%0A✅ Please review and contact the school.`;
+                    
+                    // Open WhatsApp with the image
+                    // For WhatsApp Web, we need to use a different approach
+                    // We'll open WhatsApp with text and user can attach image manually
+                    const waLink = `https://wa.me/${YOUR_WHATSAPP}?text=${message}`;
+                    window.open(waLink, '_blank');
+                    
+                    alert(`✅ WhatsApp opened! Please send the logo image along with the message.\n\nSchool Name: ${schoolName}\n\n1. Tap the attachment icon 📎\n2. Select "Gallery" \n3. Choose the logo image\n4. Tap SEND`);
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        fileInput.click();
+    }
+    
+    // Send all details to Email
+    function submitToEmail() {
+        const schoolName = document.getElementById("schoolName").value.trim();
+        const schoolLocation = document.getElementById("schoolLocation").value.trim();
+        const schoolPhone = document.getElementById("schoolPhone").value;
+        const schoolEmail = document.getElementById("schoolEmail").value;
+        const knecCode = document.getElementById("knecCode").value;
+        const schoolCategory = document.querySelector('input[name="schoolCategory"]:checked')?.value || "Not specified";
+        const academicYear = document.getElementById("academicYear").value;
+        const numTerms = document.getElementById("numTerms").value;
+        const contactName = document.getElementById("contactName").value.trim();
+        const contactEmail = document.getElementById("contactEmail").value.trim();
+        const contactPhone = document.getElementById("contactPhone").value;
+        const contactPosition = document.getElementById("contactPosition").value;
+        const adminPassword = document.getElementById("adminPassword").value;
+        const passingMarks = document.getElementById("passingMarks").value;
+        const notes = document.getElementById("notes").value;
+        
+        if (!schoolName) { alert("Enter school name"); return; }
+        if (!schoolLocation) { alert("Enter school location"); return; }
+        if (!schoolCategory || schoolCategory === "Not specified") { alert("Select school category"); return; }
+        if (!contactName) { alert("Enter your name"); return; }
+        if (!contactEmail) { alert("Enter your email"); return; }
+        if (!adminPassword || adminPassword.length < 6) { alert("Password must be 6+ characters"); return; }
+        
+        const selectedGrades = Array.from(document.querySelectorAll("#gradesCheckbox input:checked")).map(cb => cb.value);
+        if (selectedGrades.length === 0) { alert("Select at least one grade"); return; }
+        
+        const maxStreams = document.getElementById("maxStreams").value;
+        const streamNames = Array.from(document.querySelectorAll(".stream-name")).map(inp => inp.value);
+        const optionalLearningAreas = Array.from(document.querySelectorAll("#optionalLearningAreas input:checked")).map(cb => cb.value);
+        
+        const appId = "ET" + new Date().getFullYear() + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+        const timestamp = new Date().toLocaleString();
+        
+        document.getElementById("appCodeDisplay").innerText = appId;
+        document.getElementById("successModal").style.display = "flex";
+        
+        const emailSubject = `🏫 NEW CBC APPLICATION - ${schoolName} (${appId})`;
+        const emailBody = `
+========================================
+   ELIMU TRACK - NEW APPLICATION
+========================================
+
+APPLICATION ID: ${appId}
+DATE: ${timestamp}
+
+--- SCHOOL INFORMATION ---
+School Name: ${schoolName}
+Location: ${schoolLocation}
+Phone: ${schoolPhone || "N/A"}
+Email: ${schoolEmail || "N/A"}
+KNEC Code: ${knecCode || "N/A"}
+Category: ${schoolCategory}
+
+--- ACADEMIC CONFIGURATION ---
+Year: ${academicYear}
+Terms: ${numTerms}
+Grades: ${selectedGrades.join(", ")}
+Streams: ${maxStreams} per grade (${streamNames.join(", ")})
+Optional Learning Areas: ${optionalLearningAreas.join(", ") || "None"}
+Passing Marks: ${passingMarks}%
+
+--- CONTACT PERSON ---
+Name: ${contactName}
+Email: ${contactEmail}
+WhatsApp: ${contactPhone || "N/A"}
+Position: ${contactPosition || "N/A"}
+Password: ${adminPassword}
+
+--- ADDITIONAL NOTES ---
+${notes || "None"}
+
+--- ACTION REQUIRED ---
+1. Contact ${contactName} at ${contactEmail}
+2. School Code: ${appId}
+3. Logo was sent to your WhatsApp
+
+========================================
+        `;
+        
+        window.location.href = `mailto:${YOUR_EMAIL}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        
+        const appData = { appId, schoolName, contactName, contactEmail, adminPassword };
+        let existing = localStorage.getItem("elimuTrackApps") || "[]";
+        let apps = JSON.parse(existing);
+        apps.push(appData);
+        localStorage.setItem("elimuTrackApps", JSON.stringify(apps));
+    }
+    
+    function showSection(section) {
+        for(let i = 1; i <= 4; i++) {
+            const sec = document.getElementById(`section${i}`);
+            if(sec) sec.classList.toggle("active-section", i === section);
+        }
+        currentSection = section;
+        for(let i = 1; i <= 4; i++) {
+            const step = document.querySelector(`.step[data-step="${i}"]`);
+            if(step) {
+                if(i < section) step.classList.add("completed");
+                else if(i === section) step.classList.add("active");
+                else step.classList.remove("active", "completed");
+            }
+        }
+    }
+    
+    function nextSection(section) {
+        if(currentSection === 1) {
+            if(!document.getElementById("schoolName").value.trim()) { alert("Enter school name"); return; }
+            if(!document.getElementById("schoolLocation").value.trim()) { alert("Enter school location"); return; }
+            if(!document.querySelector('input[name="schoolCategory"]:checked')) { alert("Select school category"); return; }
+        }
+        if(currentSection === 2) {
+            if(document.querySelectorAll("#gradesCheckbox input:checked").length === 0) { alert("Select at least one grade"); return; }
+        }
+        if(currentSection === 4) {
+            if(!document.getElementById("contactName").value.trim()) { alert("Enter your name"); return; }
+            if(!document.getElementById("contactEmail").value.trim()) { alert("Enter your email"); return; }
+            if(!document.getElementById("adminPassword").value.trim()) { alert("Enter password"); return; }
+        }
+        showSection(section);
+    }
+    
+    function prevSection(section) { showSection(section); }
+    function closeModal() { document.getElementById("successModal").style.display = "none"; }
+    
+    populateGrades();
+    updateStreamNames();
+    document.getElementById("maxStreams")?.addEventListener("change", updateStreamNames);
+    
+    console.log("✅ Ready! Logo + Name → WhatsApp, Details → Email");
+</script>
+</body>
+  </html>
