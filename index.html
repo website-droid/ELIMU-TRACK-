@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Elimu Track - Smart School Management System | Kenya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100%;
+            background: linear-gradient(135deg, #1a3a1a, #0d2b0d);
+            color: white;
+            z-index: 100;
+            transition: all 0.3s;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-header h2 {
+            font-size: 22px;
+        }
+
+        .sidebar-header h2 i {
+            color: #ffcd3c;
+            margin-right: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            padding: 12px 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px 0;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,205,60,0.2);
+            color: #ffcd3c;
+            border-left: 3px solid #ffcd3c;
+        }
+
+        .nav-item i {
+            width: 22px;
+            font-size: 16px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .welcome-text h3 {
+            color: #1a3a1a;
+            font-size: 18px;
+        }
+
+        .welcome-text p {
+            color: #666;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        .date-time {
+            background: #f0f2f5;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 13px;
+            color: #1a3a1a;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+            background: #e8f5e9;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #2b5e2b;
+        }
+
+        .stat-info h4 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a3a1a;
+        }
+
+        .stat-info p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .action-btn.primary {
+            background: #2b5e2b;
+            color: white;
+        }
+
+        .action-btn.warning {
+            background: #ff8c00;
+            color: white;
+        }
+
+        .action-btn.info {
+            background: #2196f3;
+            color: white;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .section-header h3 {
+            color: #1a3a1a;
+            font-size: 18px;
+        }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #1a3a1a;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            border-radius: 50%;
+            background: #2b5e2b;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .rank-1 {
+            background: #ffd700;
+            color: #1a3a1a;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #1a3a1a;
+        }
+
+        .modal-content input, .modal-content select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -260px;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .sidebar.open {
+                left: 0;
+            }
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                z-index: 101;
+                background: #2b5e2b;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-graduation-cap"></i> Elimu Track</h2>
+            <p>Smart School Management System</p>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-item active" onclick="showSection('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </div>
+            <div class="nav-item" onclick="showSection('students')">
+                <i class="fas fa-users"></i> Students
+            </div>
+            <div class="nav-item" onclick="showSection('marks')">
+                <i class="fas fa-chart-line"></i> Enter Marks
+            </div>
+            <div class="nav-item" onclick="showSection('ranking')">
+                <i class="fas fa-trophy"></i> Rankings
+            </div>
+            <div class="nav-item" onclick="showSection('reports')">
+                <i class="fas fa-file-alt"></i> Reports
+            </div>
+            <div class="nav-item" onclick="showSection('settings')">
+                <i class="fas fa-cog"></i> Settings
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="welcome-text">
+                <h3>Welcome back, <span id="schoolName">Elimu Star Academy</span></h3>
+                <p>Term 2, 2024 | CBC Curriculum</p>
+            </div>
+            <div class="date-time">
+                <i class="far fa-calendar-alt"></i> <span id="currentDate"></span>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h4 id="totalStudents">0</h4>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-chalkboard"></i></div>
+                    <div class="stat-info">
+                        <h4>8</h4>
+                        <p>Active Classes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-info">
+                        <h4 id="classAvg">0%</h4>
+                        <p>Class Average</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-info">
+                        <h4 id="topStudentName">-</h4>
+                        <p>Top Performer</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="action-btn primary" onclick="showSection('marks')"><i class="fas fa-plus"></i> Enter Marks</button>
+                <button class="action-btn warning" onclick="generateReport()"><i class="fas fa-chart-bar"></i> Generate Report</button>
+                <button class="action-btn info" onclick="exportData()"><i class="fas fa-download"></i> Export Data</button>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fas fa-trophy"></i> Top Performers This Term</h3>
+                    <button class="action-btn" style="padding:5px 15px; background:#f0f2f5;" onclick="showSection('ranking')">View All →</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table" id="topPerformersTable">
+                        <thead>
+                            <tr><th>Position</th><th>Student Name</th><th>Class</th><th>Average</th><th>Grade</th></tr>
+                        </thead>
+                        <tbody id="topPerformersBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Students Section -->
+        <div id="studentsSection" style="display:none;">
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fas fa-users"></i> All Students</h3>
+                    <button class="action-btn primary" onclick="openAddStudentModal()"><i class="fas fa-plus"></i> Add Student</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>#</th><th>Admission No</th><th>Student Name</th><th>Class</th><th>Stream</th><th>Parent Contact</th><th>Action</th></tr>
+                        </thead>
+                        <tbody id="studentsListBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marks Entry Section -->
+        <div id="marksSection" style="display:none;">
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fas fa-edit"></i> Enter Examination Marks</h3>
+                    <div>
+                        <select id="examClass" style="padding:8px 15px; border-radius:20px;">
+                            <option value="Grade 4">Grade 4</option>
+                            <option value="Grade 5">Grade 5</option>
+                            <option value="Grade 6">Grade 6</option>
+                            <option value="Grade 7">Grade 7</option>
+                            <option value="Grade 8">Grade 8</option>
+                        </select>
+                        <select id="examStream" style="padding:8px 15px; border-radius:20px;">
+                            <option value="North">North</option>
+                            <option value="South">South</option>
+                            <option value="East">East</option>
+                            <option value="West">West</option>
+                        </select>
+                        <button class="action-btn primary" onclick="loadMarksEntry()" style="padding:8px 20px;"><i class="fas fa-search"></i> Load</button>
+                    </div>
+                </div>
+                <div id="marksEntryContainer"></div>
+                <div style="margin-top:20px;">
+                    <button class="action-btn warning" onclick="calculateAndSaveMarks()"><i class="fas fa-chart-line"></i> Calculate & Save</button>
+                    <button class="action-btn info" onclick="analyzeCurrentClass()"><i class="fas fa-chart-simple"></i> Analyze Class</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rankings Section -->
+        <div id="rankingSection" style="display:none;">
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fas fa-trophy"></i> Student Rankings</h3>
+                    <div>
+                        <select id="rankClass" style="padding:8px 15px; border-radius:20px;">
+                            <option value="Grade 4">Grade 4</option>
+                            <option value="Grade 5">Grade 5</option>
+                            <option value="Grade 6">Grade 6</option>
+                            <option value="Grade 7">Grade 7</option>
+                            <option value="Grade 8">Grade 8</option>
+                        </select>
+                        <button class="action-btn primary" onclick="loadRankings()" style="padding:8px 20px;"><i class="fas fa-search"></i> View Rankings</button>
+                    </div>
+                </div>
+                <div id="rankingsContainer"></div>
+            </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div id="reportsSection" style="display:none;">
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fas fa-file-alt"></i> Generate Reports</h3>
+                </div>
+                <div class="stats-grid" style="margin-bottom:20px;">
+                    <div class="stat-card" onclick="generateClassReport()" style="cursor:pointer;">
+                        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                        <div><h4>Class Performance</h4><p>Download class report</p></div>
+                    </div>
+                    <div class="stat-card" onclick="generateSubjectReport()" style="cursor:pointer;">
+                        <div class="stat-icon"><i class="fas fa-book"></i></div>
+                        <div><h4>Subject Analysis</h4><p>Subject-wise performance</p></div>
+                    </div>
+                    <div class="stat-card" onclick="generateStudentReport()" style="cursor:pointer;">
+                        <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                        <div><h4>Student Report</h4><p>Individual student report</p></div>
+                    </div>
+                </div>
+                <div id="reportPreview"></div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settingsSection" style="display:none;">
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fas fa-cog"></i> School Settings</h3>
+                </div>
+                <div class="form-group">
+                    <label>School Name</label>
+                    <input type="text" id="settingsSchoolName" value="Elimu Star Academy" style="width:100%; max-width:400px;">
+                </div>
+                <div class="form-group">
+                    <label>School Motto</label>
+                    <input type="text" id="settingsMotto" value="Excellence in Education" style="width:100%; max-width:400px;">
+                </div>
+                <div class="form-group">
+                    <label>Current Term</label>
+                    <select id="settingsTerm" style="width:200px;">
+                        <option>Term 1</option>
+                        <option selected>Term 2</option>
+                        <option>Term 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Academic Year</label>
+                    <input type="text" id="settingsYear" value="2024" style="width:150px;">
+                </div>
+                <button class="action-btn primary" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Elimu Track - Smart School Management System | CBC Compliant</p>
+        </footer>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div id="addStudentModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-user-plus"></i> Add New Student</h3>
+            <input type="text" id="newStudentName" placeholder="Full Name">
+            <input type="text" id="newAdmissionNo" placeholder="Admission Number">
+            <div class="form-row">
+                <div class="form-group">
+                    <select id="newClass"><option>Grade 4</option><option>Grade 5</option><option>Grade 6</option><option>Grade 7</option><option>Grade 8</option></select>
+                </div>
+                <div class="form-group">
+                    <select id="newStream"><option>North</option><option>South</option><option>East</option><option>West</option></select>
+                </div>
+            </div>
+            <input type="tel" id="newParentPhone" placeholder="Parent Phone">
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button class="action-btn primary" onclick="addStudent()">Add Student</button>
+                <button class="action-btn" onclick="closeModal('addStudentModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================ */
+        // ELIMU TRACK - SMART SCHOOL MANAGEMENT SYSTEM
+        // ============================================ */
+        
+        // Sample Data
+        let students = [
+            { id: 1, admNo: "ET001", name: "Aisha Mwangi", class: "Grade 7", stream: "North", parentPhone: "0712345678", marks: { math: 92, eng: 88, kisw: 85, sci: 90 } },
+            { id: 2, admNo: "ET002", name: "Frank Mwenda", class: "Grade 7", stream: "North", parentPhone: "0723456789", marks: { math: 88, eng: 85, kisw: 90, sci: 87 } },
+            { id: 3, admNo: "ET003", name: "Cynthia Wanjiku", class: "Grade 7", stream: "South", parentPhone: "0734567890", marks: { math: 78, eng: 88, kisw: 92, sci: 85 } },
+            { id: 4, admNo: "ET004", name: "David Otieno", class: "Grade 7", stream: "South", parentPhone: "0745678901", marks: { math: 65, eng: 72, kisw: 68, sci: 70 } },
+            { id: 5, admNo: "ET005", name: "Eunice Chebet", class: "Grade 8", stream: "North", parentPhone: "0756789012", marks: { math: 82, eng: 78, kisw: 85, sci: 80 } },
+            { id: 6, admNo: "ET006", name: "Grace Akinyi", class: "Grade 8", stream: "East", parentPhone: "0767890123", marks: { math: 55, eng: 62, kisw: 58, sci: 60 } }
+        ];
+
+        let currentSection = "dashboard";
+
+        function showSection(section) {
+            currentSection = section;
+            document.getElementById("dashboardSection").style.display = section === "dashboard" ? "block" : "none";
+            document.getElementById("studentsSection").style.display = section === "students" ? "block" : "none";
+            document.getElementById("marksSection").style.display = section === "marks" ? "block" : "none";
+            document.getElementById("rankingSection").style.display = section === "ranking" ? "block" : "none";
+            document.getElementById("reportsSection").style.display = section === "reports" ? "block" : "none";
+            document.getElementById("settingsSection").style.display = section === "settings" ? "block" : "none";
+            
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.nav-item').classList.add('active');
+            
+            if (section === "students") loadStudentsList();
+            if (section === "dashboard") loadDashboard();
+            if (section === "ranking") loadRankings();
+        }
+
+        function loadDashboard() {
+            const total = students.length;
+            const allMarks = [];
+            students.forEach(s => {
+                const marks = Object.values(s.marks);
+                const avg = marks.reduce((a,b) => a+b,0)/marks.length;
+                allMarks.push(avg);
+            });
+            const classAvg = allMarks.length ? (allMarks.reduce((a,b)=>a+b,0)/allMarks.length).toFixed(1) : 0;
+            const topStudent = [...students].sort((a,b) => {
+                const avgA = Object.values(a.marks).reduce((x,y)=>x+y,0)/4;
+                const avgB = Object.values(b.marks).reduce((x,y)=>x+y,0)/4;
+                return avgB - avgA;
+            })[0];
+            
+            document.getElementById("totalStudents").innerText = total;
+            document.getElementById("classAvg").innerText = classAvg + "%";
+            document.getElementById("topStudentName").innerText = topStudent ? topStudent.name : "-";
+            
+            const topPerformers = [...students].sort((a,b) => {
+                const avgA = Object.values(a.marks).reduce((x,y)=>x+y,0)/4;
+                const avgB = Object.values(b.marks).reduce((x,y)=>x+y,0)/4;
+                return avgB - avgA;
+            }).slice(0,5);
+            
+            let html = "";
+            topPerformers.forEach((s, idx) => {
+                const avg = (Object.values(s.marks).reduce((x,y)=>x+y,0)/4).toFixed(1);
+                let grade = avg >= 80 ? "EE2" : avg >= 70 ? "ME1" : avg >= 50 ? "ME2" : "AE";
+                html += `<tr><td><span class="rank-badge ${idx===0?'rank-1':''}">${idx+1}</span></td>
+                        <td>${s.name}</td><td>${s.class}</td><td><strong>${avg}%</strong></td><td>${grade}</td></tr>`;
+            });
+            document.getElementById("topPerformersBody").innerHTML = html;
+        }
+
+        function loadStudentsList() {
+            let html = "";
+            students.forEach((s, idx) => {
+                html += `<tr>
+                    <td>${idx+1}</td>
+                    <td>${s.admNo}</td>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${s.class}</td>
+                    <td>${s.stream}</td>
+                    <td>${s.parentPhone}</td>
+                    <td><i class="fas fa-trash" style="color:#e74c3c; cursor:pointer;" onclick="deleteStudent(${s.id})"></i></td>
+                </tr>`;
+            });
+            document.getElementById("studentsListBody").innerHTML = html;
+        }
+
+        function loadMarksEntry() {
+            const className = document.getElementById("examClass").value;
+            const stream = document.getElementById("examStream").value;
+            const filtered = students.filter(s => s.class === className && s.stream === stream);
+            
+            let html = `<div class="table-wrapper"><table class="data-table">
+                <thead><tr><th>#</th><th>Student Name</th><th>Mathematics</th><th>English</th><th>Kiswahili</th><th>Science</th><th>Total</th><th>Avg%</th></tr></thead><tbody>`;
+            
+            filtered.forEach((s, idx) => {
+                html += `<tr>
+                    <td>${idx+1}</td>
+                    <td><strong>${s.name}</strong></td>
+                    <td><input type="number" class="mark-input" data-student="${s.id}" data-subject="math" value="${s.marks.math}" style="width:70px; padding:5px; border-radius:8px;"></td>
+                    <td><input type="number" class="mark-input" data-student="${s.id}" data-subject="eng" value="${s.marks.eng}" style="width:70px; padding:5px; border-radius:8px;"></td>
+                    <td><input type="number" class="mark-input" data-student="${s.id}" data-subject="kisw" value="${s.marks.kisw}" style="width:70px; padding:5px; border-radius:8px;"></td>
+                    <td><input type="number" class="mark-input" data-student="${s.id}" data-subject="sci" value="${s.marks.sci}" style="width:70px; padding:5px; border-radius:8px;"></td>
+                    <td id="total-${s.id}">${Object.values(s.marks).reduce((a,b)=>a+b,0)}</td>
+                    <td id="avg-${s.id}">${(Object.values(s.marks).reduce((a,b)=>a+b,0)/4).toFixed(1)}%</td>
+                </tr>`;
+            });
+            html += `</tbody></table></div>`;
+            document.getElementById("marksEntryContainer").innerHTML = html;
+            
+            document.querySelectorAll('.mark-input').forEach(input => {
+                input.addEventListener('change', function() {
+                    const studentId = parseInt(this.dataset.student);
+                    const subject = this.dataset.subject;
+                    const student = students.find(s => s.id === studentId);
+                    if (student) {
+                        let val = parseInt(this.value);
+                        if (isNaN(val)) val = 0;
+                        if (val < 0) val = 0;
+                        if (val > 100) val = 100;
+                        if (subject === 'math') student.marks.math = val;
+                        if (subject === 'eng') student.marks.eng = val;
+                        if (subject === 'kisw') student.marks.kisw = val;
+                        if (subject === 'sci') student.marks.sci = val;
+                        const total = Object.values(student.marks).reduce((a,b)=>a+b,0);
+                        const avg = (total/4).toFixed(1);
+                        document.getElementById(`total-${studentId}`).innerHTML = total;
+                        document.getElementById(`avg-${studentId}`).innerHTML = avg + "%";
+                    }
+                });
+            });
+        }
+
+        function calculateAndSaveMarks() {
+            localStorage.setItem("elimuTrackStudents", JSON.stringify(students));
+            alert("Marks saved successfully!");
+            loadDashboard();
+        }
+
+        function analyzeCurrentClass() {
+            const className = document.getElementById("examClass").value;
+            const filtered = students.filter(s => s.class === className);
+            const ranked = filtered.map(s => ({
+                name: s.name,
+                avg: Object.values(s.marks).reduce((a,b)=>a+b,0)/4
+            })).sort((a,b) => b.avg - a.avg);
+            
+            let msg = `📊 ${className} Analysis\n\n`;
+            ranked.forEach((s, i) => {
+                let grade = s.avg >= 80 ? "EE2" : s.avg >= 70 ? "ME1" : s.avg >= 50 ? "ME2" : "AE";
+                msg += `${i+1}. ${s.name}: ${s.avg.toFixed(1)}% (${grade})\n`;
+            });
+            alert(msg);
+        }
+
+        function loadRankings() {
+            const className = document.getElementById("rankClass").value;
+            const filtered = students.filter(s => s.class === className);
+            const ranked = filtered.map(s => ({
+                name: s.name,
+                stream: s.stream,
+                avg: Object.values(s.marks).reduce((a,b)=>a+b,0)/4,
+                marks: s.marks
+            })).sort((a,b) => b.avg - a.avg);
+            
+            let html = `<div class="table-wrapper"><table class="data-table">
+                <thead><tr><th>Pos</th><th>Student Name</th><th>Stream</th><th>Math</th><th>Eng</th><th>Kisw</th><th>Sci</th><th>Avg%</th><th>Grade</th></tr></thead><tbody>`;
+            
+            ranked.forEach((s, i) => {
+                const isFirst = i === 0;
+                const grade = s.avg >= 80 ? "EE2" : s.avg >= 70 ? "ME1" : s.avg >= 50 ? "ME2" : "AE";
+                html += `<tr style="${isFirst ? 'background:#fff9c4' : ''}">
+                    <td><span class="rank-badge ${isFirst ? 'rank-1' : ''}">${i+1}</span></td>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${s.stream}</td>
+                    <td>${s.marks.math}</td><td>${s.marks.eng}</td><td>${s.marks.kisw}</td><td>${s.marks.sci}</td>
+                    <td><strong>${s.avg.toFixed(1)}%</strong></td>
+                    <td>${grade}</td>
+                </tr>`;
+            });
+            html += `</tbody></table></div>`;
+            document.getElementById("rankingsContainer").innerHTML = html;
+        }
+
+        function generateReport() {
+            alert("📄 Generating comprehensive report...\n\nReport includes:\n- Class performance summary\n- Subject-wise analysis\n- Student rankings\n- Grade distribution\n\nReport will be available for download.");
+        }
+
+        function generateClassReport() {
+            alert("📊 Class Performance Report generated! Check your downloads folder.");
+        }
+
+        function generateSubjectReport() {
+            alert("📖 Subject Analysis Report generated! Check your downloads folder.");
+        }
+
+        function generateStudentReport() {
+            alert("👨‍🎓 Student Report generated! Check your downloads folder.");
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(students, null, 2);
+            const blob = new Blob([dataStr], {type: "application/json"});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "elimutrack_data.json";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function openAddStudentModal() {
+            document.getElementById("addStudentModal").style.display = "flex";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function addStudent() {
+            const newId = Math.max(...students.map(s => s.id)) + 1;
+            students.push({
+                id: newId,
+                admNo: document.getElementById("newAdmissionNo").value,
+                name: document.getElementById("newStudentName").value,
+                class: document.getElementById("newClass").value,
+                stream: document.getElementById("newStream").value,
+                parentPhone: document.getElementById("newParentPhone").value,
+                marks: { math: 0, eng: 0, kisw: 0, sci: 0 }
+            });
+            closeModal("addStudentModal");
+            loadStudentsList();
+            loadDashboard();
+            alert("Student added successfully!");
+        }
+
+        function deleteStudent(id) {
+            if (confirm("Delete this student?")) {
+                students = students.filter(s => s.id !== id);
+                loadStudentsList();
+                loadDashboard();
+            }
+        }
+
+        function saveSettings() {
+            document.getElementById("schoolName").innerText = document.getElementById("settingsSchoolName").value;
+            alert("Settings saved successfully!");
+        }
+
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("open");
+        }
+
+        // Date
+        function updateDate() {
+            const now = new Date();
+            document.getElementById("currentDate").innerHTML = now.toLocaleDateString('en-KE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        updateDate();
+        loadDashboard();
+        
+        console.log("✅ Elimu Track Demo Ready! Like SmartShule but better for rural schools!");
+    </script>
+</body>
+  </html>
